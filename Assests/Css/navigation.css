@@ -1,0 +1,16 @@
+.hero{
+    width: 100%;
+    background:#5E72E2;
+    justify-content: center;
+}
+.logOut {
+    position: absolute; /* or fixed */
+    top: 1px;
+    border-radius: 10px;
+    right: 20px;
+    font-weight: bold;
+    background: #F4F6F7;
+}
+.btn{
+    color: black;
+}

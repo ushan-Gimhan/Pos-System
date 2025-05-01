@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .navbar {
+            background-color: #5468E7 !important;
+        }
+
+        .logo-container {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-container img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-btn {
+            background-color: white;
+            color: #333;
+            border-radius: 20px;
+            padding: 6px 20px;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+
+        .nav-btn.active {
+            background-color: #E5E7F9;
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            border-bottom: 1px dotted #ccc;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            background-color: #e9e9e9;
+            border: 1px solid #ddd;
+        }
+
+        .btn-save {
+            background-color: #5CD3A8;
+            border-color: #5CD3A8;
+        }
+
+        .btn-update {
+            background-color: #7761C1;
+            border-color: #7761C1;
+        }
+
+        .btn-reset {
+            background-color: #BD5555;
+            border-color: #BD5555;
+        }
+
+        .btn-delete {
+            background-color: #F92F2F;
+            border-color: #F92F2F;
+        }
+
+        .btn-search {
+            background-color: #28A745;
+            border-color: #28A745;
+        }
+
+        .action-btn {
+            border-radius: 25px;
+            padding: 8px 25px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .table-header {
+            background-color: #5468E7;
+            color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <div class="logo-container me-3">
+            <img src="logo.png" alt="Logo">
+        </div>
+
+        <div class="d-flex mx-auto">
+            <button class="btn nav-btn">Home</button>
+            <button class="btn nav-btn active">Customer</button>
+            <button class="btn nav-btn">Item</button>
+            <button class="btn nav-btn">Order</button>
+        </div>
+
+        <button class="btn btn-light ms-auto">Log Out</button>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="form-container">
+        <h2 class="text-center mb-4">Customer Form</h2>
+
+        <form id="customerForm">
+            <div class="form-group row align-items-center">
+                <label for="id" class="col-sm-2 col-form-label fw-bold">ID</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="id" name="id" readonly>
+                </div>
+            </div>
+
+            <div class="form-group row align-items-center">
+                <label for="name" class="col-sm-2 col-form-label fw-bold">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+            </div>
+
+            <div class="form-group row align-items-center">
+                <label for="nic" class="col-sm-2 col-form-label fw-bold">NIC</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="nic" name="nic">
+                </div>
+            </div>
+
+            <div class="form-group row align-items-center">
+                <label for="email" class="col-sm-2 col-form-label fw-bold">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+            </div>
+
+            <div class="form-group row align-items-center">
+                <label for="mobile" class="col-sm-2 col-form-label fw-bold">Mobile Number</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="mobile" name="mobile">
+                </div>
+            </div>
+
+            <div class="text-center my-4">
+                <button type="button" class="btn action-btn btn-save mx-1" id="saveBtn">Save</button>
+                <button type="button" class="btn action-btn btn-update mx-1" id="updateBtn">Update</button>
+                <button type="button" class="btn action-btn btn-reset mx-1" id="resetBtn">Reset</button>
+                <button type="button" class="btn action-btn btn-delete mx-1" id="deleteBtn">Delete</button>
+            </div>
+        </form>
+
+        <div class="row align-items-center mb-4 mt-5">
+            <div class="col-sm-2">
+                <label for="search" class="fw-bold">Search Customer</label>
+            </div>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="search" name="search" placeholder="Search by name, email, or NIC...">
+            </div>
+            <div class="col-sm-2">
+                <button type="button" class="btn btn-search text-white w-100" id="searchBtn">Search</button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-header">
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>NIC</th>
+                    <th>Email</th>
+                    <th>Mobile Number</th>
+                </tr>
+                </thead>
+                <tbody id="customerTableBody">
+                <!-- Sample data rows - would be populated by JavaScript in a real application -->
+                <tr>
+                    <td>C001</td>
+                    <td>John Doe</td>
+                    <td>123456789V</td>
+                    <td>john@example.com</td>
+                    <td>0771234567</td>
+                </tr>
+                <tr>
+                    <td>C002</td>
+                    <td>Jane Smith</td>
+                    <td>987654321X</td>
+                    <td>jane@example.com</td>
+                    <td>0767654321</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JavaScript would go here -->
+<script>
+    // Add your JavaScript functionality here
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sample code to generate ID
+        document.getElementById('id').value = 'C003';
+
+        // Example of row click to populate form
+        const tableRows = document.querySelectorAll('tbody tr');
+        tableRows.forEach(row => {
+            row.addEventListener('click', function() {
+                const cells = this.cells;
+                document.getElementById('id').value = cells[0].textContent;
+                document.getElementById('name').value = cells[1].textContent;
+                document.getElementById('nic').value = cells[2].textContent;
+                document.getElementById('email').value = cells[3].textContent;
+                document.getElementById('mobile').value = cells[4].textContent;
+            });
+        });
+    });
+</script>
+</body>
+</html>
