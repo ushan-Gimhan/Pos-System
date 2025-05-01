@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Management System</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Assests/Css/all.css">
+    <link rel="stylesheet" href="Assests/Css/Order.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f5f5f5;
@@ -101,143 +103,320 @@
             background-color: #f1f1f1;
             cursor: pointer;
         }
+        .btn-place-order {
+            background-color: #8ED485;
+            color: white;
+            width: 100%;
+        }
+        .btn-add {
+            background-color: #4CAF50;
+            color: white;
+        }
     </style>
 </head>
 <body>
-<!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
         <div class="logo-container me-3">
-            <img src="logo.png" alt="Logo">
+            <img src="Assests/Images/img.png" alt="Logo">
         </div>
 
         <div class="d-flex mx-auto">
-            <button class="btn nav-btn">Home</button>
-            <button class="btn nav-btn active">Customer</button>
-            <button class="btn nav-btn">Item</button>
-            <button class="btn nav-btn">Order</button>
+            <button class="btn nav-btn nav-link">Home</button>
+            <button class="btn nav-btn nav-link">Customer</button>
+            <button class="btn nav-btn nav-link">Item</button>
+            <button class="btn nav-btn nav-link">Order</button>
         </div>
 
         <button class="btn btn-light ms-auto">Log Out</button>
     </div>
 </nav>
+<section id="customer">
+    <div class="container">
+        <div class="form-container">
+            <h4 class="text-center mb-4">Customer Form</h4>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="form-container">
-        <h2 class="text-center mb-4">Customer Form</h2>
+            <form id="customerForm">
+                <div class="form-group row align-items-center">
+                    <label for="id" class="col-sm-2 col-form-label fw-bold">ID</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="id" name="id" readonly>
+                    </div>
+                </div>
 
-        <form id="customerForm">
-            <div class="form-group row align-items-center">
-                <label for="id" class="col-sm-2 col-form-label fw-bold">ID</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="id" name="id" readonly>
+                <div class="form-group row align-items-center">
+                    <label for="name" class="col-sm-2 col-form-label fw-bold">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <label for="nic" class="col-sm-2 col-form-label fw-bold">NIC</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="nic" name="nic">
+                    </div>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <label for="email" class="col-sm-2 col-form-label fw-bold">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <label for="mobile" class="col-sm-2 col-form-label fw-bold">Mobile Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="mobile" name="mobile">
+                    </div>
+                </div>
+
+                <div class="text-center my-4">
+                    <button type="button" class="btn action-btn btn-save mx-1" id="saveBtn">Save</button>
+                    <button type="button" class="btn action-btn btn-update mx-1" id="updateBtn">Update</button>
+                    <button type="button" class="btn action-btn btn-reset mx-1" id="resetBtn">Reset</button>
+                    <button type="button" class="btn action-btn btn-delete mx-1" id="deleteBtn">Delete</button>
+                </div>
+            </form>
+
+            <div class="row align-items-center mb-4 mt-5">
+                <div class="col-sm-2">
+                    <label for="search" class="fw-bold">Search Customer</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="search" name="search" placeholder="Search by name, email, or NIC...">
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-search text-white w-100" id="searchBtn">Search</button>
                 </div>
             </div>
 
-            <div class="form-group row align-items-center">
-                <label for="name" class="col-sm-2 col-form-label fw-bold">Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" name="name">
-                </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-header">
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Name</th>
+                        <th>NIC</th>
+                        <th>Email</th>
+                        <th>Mobile Number</th>
+                    </tr>
+                    </thead>
+                    <tbody id="customerTableBody">
+                    <tr>
+                        <td>C001</td>
+                        <td>John Doe</td>
+                        <td>123456789V</td>
+                        <td>john@example.com</td>
+                        <td>0771234567</td>
+                    </tr>
+                    <tr>
+                        <td>C002</td>
+                        <td>Jane Smith</td>
+                        <td>987654321X</td>
+                        <td>jane@example.com</td>
+                        <td>0767654321</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-
-            <div class="form-group row align-items-center">
-                <label for="nic" class="col-sm-2 col-form-label fw-bold">NIC</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nic" name="nic">
-                </div>
-            </div>
-
-            <div class="form-group row align-items-center">
-                <label for="email" class="col-sm-2 col-form-label fw-bold">Email</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" id="email" name="email">
-                </div>
-            </div>
-
-            <div class="form-group row align-items-center">
-                <label for="mobile" class="col-sm-2 col-form-label fw-bold">Mobile Number</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="mobile" name="mobile">
-                </div>
-            </div>
-
-            <div class="text-center my-4">
-                <button type="button" class="btn action-btn btn-save mx-1" id="saveBtn">Save</button>
-                <button type="button" class="btn action-btn btn-update mx-1" id="updateBtn">Update</button>
-                <button type="button" class="btn action-btn btn-reset mx-1" id="resetBtn">Reset</button>
-                <button type="button" class="btn action-btn btn-delete mx-1" id="deleteBtn">Delete</button>
-            </div>
-        </form>
-
-        <div class="row align-items-center mb-4 mt-5">
-            <div class="col-sm-2">
-                <label for="search" class="fw-bold">Search Customer</label>
-            </div>
-            <div class="col-sm-8">
-                <input type="text" class="form-control" id="search" name="search" placeholder="Search by name, email, or NIC...">
-            </div>
-            <div class="col-sm-2">
-                <button type="button" class="btn btn-search text-white w-100" id="searchBtn">Search</button>
-            </div>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead class="table-header">
-                <tr>
-                    <th>Customer ID</th>
-                    <th>Name</th>
-                    <th>NIC</th>
-                    <th>Email</th>
-                    <th>Mobile Number</th>
-                </tr>
-                </thead>
-                <tbody id="customerTableBody">
-                <!-- Sample data rows - would be populated by JavaScript in a real application -->
-                <tr>
-                    <td>C001</td>
-                    <td>John Doe</td>
-                    <td>123456789V</td>
-                    <td>john@example.com</td>
-                    <td>0771234567</td>
-                </tr>
-                <tr>
-                    <td>C002</td>
-                    <td>Jane Smith</td>
-                    <td>987654321X</td>
-                    <td>jane@example.com</td>
-                    <td>0767654321</td>
-                </tr>
-                </tbody>
-            </table>
         </div>
     </div>
-</div>
+</section>
+<section id="item">
+    <div class="container">
+        <div class="form-container">
+            <h4 class="text-center mb-4">Item Form</h4>
+            <form id="itemForm">
+                <div class="form-group row align-items-center">
+                    <label for="id" class="col-sm-2 col-form-label fw-bold">Item ID</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="itemid" name="Item ID" readonly>
+                    </div>
+                </div>
 
-<!-- JavaScript for Bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+                <div class="form-group row align-items-center">
+                    <label for="name" class="col-sm-2 col-form-label fw-bold">Item Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="itemname" name="Item Name">
+                    </div>
+                </div>
 
-<!-- Custom JavaScript would go here -->
+                <div class="form-group row align-items-center">
+                    <label for="nic" class="col-sm-2 col-form-label fw-bold">Price</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="price" name="Price">
+                    </div>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <label for="email" class="col-sm-2 col-form-label fw-bold">Item Quantity</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="qty" name="Quantity">
+                    </div>
+                </div>
+
+                <div class="text-center my-4">
+                    <button type="button" class="btn btn-success mx-1" id="saveItemBtn">Save</button>
+                    <button type="button" class="btn btn-primary mx-1" id="updateItemBtn">Update</button>
+                    <button type="button" class="btn btn-secondary mx-1" id="resetItemBtn">Reset</button>
+                    <button type="button" class="btn btn-danger mx-1" id="deleteItemBtn">Delete</button>
+                </div>
+
+            </form>
+
+            <div class="row align-items-center mb-4 mt-5">
+                <div class="col-sm-2">
+                    <label for="search" class="fw-bold">Search Item</label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="searchItem" name="search" placeholder="Search by name, email, or NIC...">
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-search text-white w-100" id="searchItemBtn">Search</button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-header">
+                    <tr>
+                        <th>Item ID</th>
+                        <th>Item Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                    </thead>
+                    <tbody id="ItemTableBody">
+                    <tr>
+                        <td>I001</td>
+                        <td>Book</td>
+                        <td>Rs:150</td>
+                        <td>100</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="Orders">
+    <div class="container order-container">
+        <div class="card mb-4">
+            <div class="card-header">
+                Order Form
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="orderID" class="form-label">Order ID</label>
+                        <input type="text" class="form-control" id="orderID" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="orderDate" class="form-label">Date</label>
+                        <input type="text" class="form-control bg-light" id="orderDate" readonly>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="input-section">
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <label for="itemID" class="form-label">Item ID</label>
+                                    <select class="form-select" id="itemOrderID" aria-label="Select Item ID"></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="itemName" class="form-label">Item Name</label>
+                                    <input type="text" class="form-control" id="itemNameInOrder">
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <label for="qtyOnHand" class="form-label">Qnty On Hand</label>
+                                    <input type="number" class="form-control" id="qtyOnHand" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="unitPrice" class="form-label">Unit Price</label>
+                                    <input type="number" class="form-control" id="unitPrice" readonly>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <label for="qty" class="form-label">Qty</label>
+                                    <input type="number" class="form-control" id="qtyInOrder">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="total" class="form-label">Total</label>
+                                    <input type="number" class="form-control" id="total" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="input-section h-100">
+                            <div class="mb-3">
+                                <label for="customerID" class="form-label">Customer ID</label>
+                                <select class="form-select" id="customerID" aria-label="Select Customer ID">
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="customerName" class="form-label">Customer Name</label>
+                                <input type="text" class="form-control" id="customerName">
+                            </div>
+                            <div class="d-flex justify-content-end mt-4">
+                                <button class="btn btn-add" id="addToCartBtn">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="cart-table">
+                        <thead class="order-table">
+                        <tr>
+                            <th>Item ID</th>
+                            <th>Name</th>
+                            <th>Cart Qnty</th>
+                            <th>Unit Price</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody id="cartItems">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <button class="btn btn-place-order mb-2" id="placeOrderBtn">Place Order</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-reset mb-2 Orderreset"  id="resetOrderBtn">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+<script src="Assests/lib/jQuery/jquery-3.6.4.min.js"></script>
 <script>
-    // Add your JavaScript functionality here
-    document.addEventListener('DOMContentLoaded', function() {
-        // Sample code to generate ID
-        document.getElementById('id').value = 'C003';
+    $("#customer").css("display", "block");
+    $("#item").css("display", "none");
+    $("#Orders").css("display", "none");
 
-        // Example of row click to populate form
-        const tableRows = document.querySelectorAll('tbody tr');
-        tableRows.forEach(row => {
-            row.addEventListener('click', function() {
-                const cells = this.cells;
-                document.getElementById('id').value = cells[0].textContent;
-                document.getElementById('name').value = cells[1].textContent;
-                document.getElementById('nic').value = cells[2].textContent;
-                document.getElementById('email').value = cells[3].textContent;
-                document.getElementById('mobile').value = cells[4].textContent;
-            });
-        });
+    var navLocation = '#home';
+    $('.nav-link').click(function(e){
+        $(navLocation).css("display", "none");
+        navLocation = "#"+e.target.innerHTML.toLowerCase();
+        $(navLocation).css("display", "block");
     });
 </script>
 </body>

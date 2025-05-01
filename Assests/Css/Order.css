@@ -1,0 +1,55 @@
+body {
+    background-color: #f0f0f0;
+}
+.navbar {
+    background-color: #6c7ae0;
+}
+.navbar-brand img {
+    height: 40px;
+}
+.order-container {
+    background-color: #e9ecef;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.card-header {
+    background-color: #d1d1d1;
+    text-align: center;
+    font-weight: bold;
+}
+.order-table {
+    background-color: #6c7ae0;
+    color: white;
+}
+.order-table th {
+    font-weight: normal;
+}
+.input-section {
+    background-color: #e2e2e2;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+.btn-add {
+    background-color: #4CAF50;
+    color: white;
+}
+.btn-place-order {
+    background-color: #8ED485;
+    color: white;
+    width: 100%;
+}
+.Orderreset {
+    background-color: #FF4136;
+    color: white;
+    width: 100%;
+}
+#cart-table {
+    margin-top: 15px;
+}
+.action-btn {
+    padding: 2px 8px;
+    margin: 0 2px;
+}
