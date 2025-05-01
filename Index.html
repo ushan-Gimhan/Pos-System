@@ -408,15 +408,25 @@
         crossorigin="anonymous"></script>
 <script src="Assests/lib/jQuery/jquery-3.6.4.min.js"></script>
 <script>
-    $("#customer").css("display", "block");
-    $("#item").css("display", "none");
-    $("#Orders").css("display", "none");
+    $(document).ready(function () {
+        $("#customer, #item, #Orders").hide();
 
-    var navLocation = '#home';
-    $('.nav-link').click(function(e){
-        $(navLocation).css("display", "none");
-        navLocation = "#"+e.target.innerHTML.toLowerCase();
-        $(navLocation).css("display", "block");
+        $(".nav-btn").click(function () {
+            $(".nav-btn").removeClass("active");
+            $(this).addClass("active");
+
+            let text = $(this).text().toLowerCase();
+
+            $("#customer, #item, #Orders").hide();
+
+            if (text === "customer") {
+                $("#customer").show();
+            } else if (text === "item") {
+                $("#item").show();
+            } else if (text === "order") {
+                $("#Orders").show();
+            }
+        });
     });
 </script>
 </body>
