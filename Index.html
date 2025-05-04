@@ -112,23 +112,81 @@
             background-color: #4CAF50;
             color: white;
         }
+        .navbar {
+            padding: 10px 15px;
+        }
+
+        .logo-container img {
+            max-height: 40px;
+        }
+
+        .nav-btn {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-radius: 6px;
+            padding: 8px 16px;
+            margin: 0 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .nav-btn.active {
+            background-color: white;
+            color: #0d6efd;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .logOut{
+            margin: 0 !important;
+        }
+
+
+
+        @media (max-width: 768px) {
+            .d-flex.mx-auto {
+                flex-wrap: wrap;
+                justify-content: center;
+                margin: 10px 0;
+            }
+
+            .nav-btn {
+                margin: 5px;
+                min-width: 90px;
+            }
+        }
+
+
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
+
         <div class="logo-container me-3">
-            <img src="Assests/Images/img.png" alt="Logo">
+            <img src="Assests/Images/img.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
         </div>
 
-        <div class="d-flex mx-auto">
-            <button class="btn nav-btn nav-link">Home</button>
-            <button class="btn nav-btn nav-link">Customer</button>
-            <button class="btn nav-btn nav-link">Item</button>
-            <button class="btn nav-btn nav-link">Order</button>
-        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <button class="btn btn-light ms-auto">Log Out</button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="d-flex flex-column flex-lg-row mx-auto text-center">
+                <button class="btn nav-btn nav-link m-1">Home</button>
+                <button class="btn nav-btn nav-link m-1">Customer</button>
+                <button class="btn nav-btn nav-link m-1">Item</button>
+                <button class="btn nav-btn nav-link m-1">Order</button>
+            </div>
+
+            <button class="btn btn-light mt-2 mt-lg-0 ms-lg-auto logOut">Log Out</button>
+        </div>
     </div>
 </nav>
 <section id="customer">
@@ -140,43 +198,43 @@
                 <div class="form-group row align-items-center">
                     <label for="id" class="col-sm-2 col-form-label fw-bold">ID</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="id" name="id" readonly>
+                        <input type="text" class="form-control" id="id">
                     </div>
                 </div>
 
                 <div class="form-group row align-items-center">
                     <label for="name" class="col-sm-2 col-form-label fw-bold">Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" name="name">
+                        <input type="text" class="form-control" id="name">
                     </div>
                 </div>
 
                 <div class="form-group row align-items-center">
                     <label for="nic" class="col-sm-2 col-form-label fw-bold">NIC</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="nic" name="nic">
+                        <input type="text" class="form-control" id="nic">
                     </div>
                 </div>
 
                 <div class="form-group row align-items-center">
                     <label for="email" class="col-sm-2 col-form-label fw-bold">Email</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="email" name="email">
+                        <input type="email" class="form-control" id="email">
                     </div>
                 </div>
 
                 <div class="form-group row align-items-center">
                     <label for="mobile" class="col-sm-2 col-form-label fw-bold">Mobile Number</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="mobile" name="mobile">
+                        <input type="text" class="form-control" id="mobile">
                     </div>
                 </div>
 
                 <div class="text-center my-4">
-                    <button type="button" class="btn action-btn btn-save mx-1" id="saveBtn">Save</button>
-                    <button type="button" class="btn action-btn btn-update mx-1" id="updateBtn">Update</button>
-                    <button type="button" class="btn action-btn btn-reset mx-1" id="resetBtn">Reset</button>
-                    <button type="button" class="btn action-btn btn-delete mx-1" id="deleteBtn">Delete</button>
+                    <button type="button" class="btn action-btn btn-save mx-1" id="saveCustomerBtn">Save</button>
+                    <button type="button" class="btn action-btn btn-update mx-1" id="updateCustomerBtn">Update</button>
+                    <button type="button" class="btn action-btn btn-reset mx-1" id="resetCustomerBtn">Reset</button>
+                    <button type="button" class="btn action-btn btn-delete mx-1" id="deleteCustomerBtn">Delete</button>
                 </div>
             </form>
 
@@ -205,14 +263,14 @@
                     </thead>
                     <tbody id="customerTableBody">
                     <tr>
-                        <td>C001</td>
+                        <td>01</td>
                         <td>John Doe</td>
                         <td>123456789V</td>
                         <td>john@example.com</td>
                         <td>0771234567</td>
                     </tr>
                     <tr>
-                        <td>C002</td>
+                        <td>02</td>
                         <td>Jane Smith</td>
                         <td>987654321X</td>
                         <td>jane@example.com</td>
@@ -230,30 +288,30 @@
             <h4 class="text-center mb-4">Item Form</h4>
             <form id="itemForm">
                 <div class="form-group row align-items-center">
-                    <label for="id" class="col-sm-2 col-form-label fw-bold">Item ID</label>
+                    <label for="item_id" class="col-sm-2 col-form-label fw-bold">Item ID</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="itemid" name="Item ID" readonly>
+                        <input type="text" class="form-control" id="item_id" name="Item ID">
                     </div>
                 </div>
 
                 <div class="form-group row align-items-center">
-                    <label for="name" class="col-sm-2 col-form-label fw-bold">Item Name</label>
+                    <label for="item_name" class="col-sm-2 col-form-label fw-bold">Item Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="itemname" name="Item Name">
+                        <input type="text" class="form-control" id="item_name" name="Item Name">
                     </div>
                 </div>
 
                 <div class="form-group row align-items-center">
-                    <label for="nic" class="col-sm-2 col-form-label fw-bold">Price</label>
+                    <label for="item_price" class="col-sm-2 col-form-label fw-bold">Price</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="price" name="Price">
+                        <input type="text" class="form-control" id="item_price" name="Price">
                     </div>
                 </div>
 
                 <div class="form-group row align-items-center">
-                    <label for="email" class="col-sm-2 col-form-label fw-bold">Item Quantity</label>
+                    <label for="item_qty" class="col-sm-2 col-form-label fw-bold">Item Quantity</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" id="qty" name="Quantity">
+                        <input type="number" class="form-control" id="item_qty" name="Quantity">
                     </div>
                 </div>
 
@@ -290,7 +348,7 @@
                     </thead>
                     <tbody id="ItemTableBody">
                     <tr>
-                        <td>I001</td>
+                        <td>1</td>
                         <td>Book</td>
                         <td>Rs:150</td>
                         <td>100</td>
@@ -311,11 +369,11 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="orderID" class="form-label">Order ID</label>
-                        <input type="text" class="form-control" id="orderID" readonly>
+                        <input type="text" class="form-control" id="orderID">
                     </div>
                     <div class="col-md-6">
                         <label for="orderDate" class="form-label">Date</label>
-                        <input type="text" class="form-control bg-light" id="orderDate" readonly>
+                        <input type="text" class="form-control bg-light" id="orderDate">
                     </div>
                 </div>
 
@@ -324,11 +382,11 @@
                         <div class="input-section">
                             <div class="row mb-2">
                                 <div class="col-md-6">
-                                    <label for="itemID" class="form-label">Item ID</label>
+                                    <label for="itemOrderID" class="form-label">Item ID</label>
                                     <select class="form-select" id="itemOrderID" aria-label="Select Item ID"></select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="itemName" class="form-label">Item Name</label>
+                                    <label for="itemNameInOrder" class="form-label">Item Name</label>
                                     <input type="text" class="form-control" id="itemNameInOrder">
                                 </div>
                             </div>
@@ -344,7 +402,7 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-md-6">
-                                    <label for="qty" class="form-label">Qty</label>
+                                    <label for="qtyInOrder" class="form-label">Qty</label>
                                     <input type="number" class="form-control" id="qtyInOrder">
                                 </div>
                                 <div class="col-md-6">
@@ -429,5 +487,10 @@
         });
     });
 </script>
+<script type="module" src="Controller/customer.js"></script>
+<script type="module" src="Controller/item.js"></script>
+<script type="module" src="Controller/orders.js"></script>
+
+<script type="module" src="DB/db.js"></script>
 </body>
 </html>
