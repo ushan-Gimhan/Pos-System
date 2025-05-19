@@ -126,8 +126,12 @@
             border-radius: 6px;
             padding: 8px 16px;
             margin: 0 5px;
-            font-weight: 500;
             transition: all 0.3s ease;
+            width: 120px;
+            height: 45px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
         }
 
         .nav-btn:hover {
@@ -146,8 +150,6 @@
             margin: 0 !important;
         }
 
-
-
         @media (max-width: 768px) {
             .d-flex.mx-auto {
                 flex-wrap: wrap;
@@ -157,7 +159,9 @@
 
             .nav-btn {
                 margin: 5px;
+                width: 100%;
                 min-width: 90px;
+
             }
         }
 
@@ -262,20 +266,20 @@
                     </tr>
                     </thead>
                     <tbody id="customerTableBody">
-                    <tr>
-                        <td>01</td>
-                        <td>John Doe</td>
-                        <td>123456789V</td>
-                        <td>john@example.com</td>
-                        <td>0771234567</td>
-                    </tr>
-                    <tr>
-                        <td>02</td>
-                        <td>Jane Smith</td>
-                        <td>987654321X</td>
-                        <td>jane@example.com</td>
-                        <td>0767654321</td>
-                    </tr>
+<!--                    <tr>-->
+<!--                        <td>01</td>-->
+<!--                        <td>John Doe</td>-->
+<!--                        <td>123456789V</td>-->
+<!--                        <td>john@example.com</td>-->
+<!--                        <td>0771234567</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>02</td>-->
+<!--                        <td>Jane Smith</td>-->
+<!--                        <td>987654321X</td>-->
+<!--                        <td>jane@example.com</td>-->
+<!--                        <td>0767654321</td>-->
+<!--                    </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -342,17 +346,17 @@
                     <tr>
                         <th>Item ID</th>
                         <th>Item Name</th>
-                        <th>Price</th>
                         <th>Quantity</th>
+                        <th>Price</th>
                     </tr>
                     </thead>
                     <tbody id="ItemTableBody">
-                    <tr>
-                        <td>1</td>
-                        <td>Book</td>
-                        <td>Rs:150</td>
-                        <td>100</td>
-                    </tr>
+<!--                    <tr>-->
+<!--                        <td>1</td>-->
+<!--                        <td>Book</td>-->
+<!--                        <td>Rs:150</td>-->
+<!--                        <td>100</td>-->
+<!--                    </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -369,11 +373,11 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="orderID" class="form-label">Order ID</label>
-                        <input type="text" class="form-control" id="orderID">
+                        <input type="text" class="form-control" id="orderID" readonly>
                     </div>
                     <div class="col-md-6">
                         <label for="orderDate" class="form-label">Date</label>
-                        <input type="text" class="form-control bg-light" id="orderDate">
+                        <input type="text" class="form-control bg-light" id="orderDate"  readonly>
                     </div>
                 </div>
 
@@ -382,8 +386,15 @@
                         <div class="input-section">
                             <div class="row mb-2">
                                 <div class="col-md-6">
-                                    <label for="itemOrderID" class="form-label">Item ID</label>
-                                    <select class="form-select" id="itemOrderID" aria-label="Select Item ID"></select>
+                                    <label class="form-label">Item ID</label>
+                                    <div class="input-group">
+                                        <input id="inputItemId" type="text" class="form-control" aria-label="Text input with dropdown button" readonly>
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <ul id="dropdownItemList" class="dropdown-menu dropdown-menu-end">
+
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="itemNameInOrder" class="form-label">Item Name</label>
@@ -416,9 +427,15 @@
                     <div class="col-md-5">
                         <div class="input-section h-100">
                             <div class="mb-3">
-                                <label for="customerID" class="form-label">Customer ID</label>
-                                <select class="form-select" id="customerID" aria-label="Select Customer ID">
-                                </select>
+                                <label class="form-label">Customer ID</label>
+                                <div class="input-group">
+                                    <input id="inputCustomerId" type="text" class="form-control" aria-label="Text input with dropdown button" readonly>
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    </button>
+                                    <ul id="dropdownList" class="dropdown-menu dropdown-menu-end">
+
+                                    </ul>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="customerName" class="form-label">Customer Name</label>
@@ -444,6 +461,14 @@
                         </tr>
                         </thead>
                         <tbody id="cartItems">
+<!--                            <tr>-->
+<!--                                <td>I001</td>-->
+<!--                                <td>Pen</td>-->
+<!--                                <td>25</td>-->
+<!--                                <td>100</td>-->
+<!--                                <td>2500</td>-->
+<!--                                <td><button>Remove</button></td>-->
+<!--                            </tr>-->
                         </tbody>
                     </table>
                 </div>
@@ -460,11 +485,15 @@
         </div>
     </div>
 </section>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
 <script src="Assests/lib/jQuery/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="module" src="Controller/customerController.js"></script>
+<script type="module" src="Controller/itemController.js"></script>
+<script type="module" src="Controller/ordersController.js"></script>
+<script type="module" src="DB/db.js"></script>
 <script>
     $(document).ready(function () {
         $("#customer, #item, #Orders").hide();
@@ -487,10 +516,5 @@
         });
     });
 </script>
-<script type="module" src="Controller/customer.js"></script>
-<script type="module" src="Controller/item.js"></script>
-<script type="module" src="Controller/orders.js"></script>
-
-<script type="module" src="DB/db.js"></script>
 </body>
 </html>

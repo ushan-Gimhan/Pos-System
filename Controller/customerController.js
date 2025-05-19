@@ -1,10 +1,14 @@
 import { Customer } from "../Model/Customer.js";
 import { customerData } from "../DB/db.js";
+import {setCustomerIds} from "../Controller/ordersController.js";
+
 
 export class CustomerController {
     constructor() {
         $(document).ready(() => {
             this.handleEvents();
+            const custID = generateCusyomerId(1); // Replace 1 with the next available number
+            document.getElementById('id').value = custID;
         });
     }
 
@@ -25,7 +29,6 @@ export class CustomerController {
         } else {
             id = 'C001';
         }
-
         const name = $('#name').val();
         const nic = $('#nic').val();
         const email = $('#email').val();
@@ -39,8 +42,12 @@ export class CustomerController {
         const customer = new Customer(id, name, nic, email, mobile);
 
         customerData.push(customer);
-
-        alert("Customer saved successfully!");
+        setCustomerIds();
+        Swal.fire({
+            title: "Added Successfully!",
+            icon: "success",
+            draggable: true
+        });
         this.clearForm();
         this.loadCustomerTable();
         this.handleCustomerRowClick();
@@ -98,7 +105,11 @@ export class CustomerController {
         const index = customerData.findIndex(customer => customer.id === id);
 
         if (index === -1) {
-            alert("Customer not found!");
+            Swal.fire({
+                title: "Update Successfully!",
+                icon: "success",
+                draggable: true
+            });
             return;
         }
 
@@ -107,7 +118,11 @@ export class CustomerController {
         customerData[index].customerEmail = customerEmail;
         customerData[index].customerPhone = customerPhone;
 
-        alert("Customer updated successfully!");
+        Swal.fire({
+            title: "Updated Successfully!",
+            icon: "success",
+            draggable: true
+        });
         this.loadCustomerTable();
         this.clearForm();
     }
@@ -124,12 +139,18 @@ export class CustomerController {
         if (!confirm("Are you sure you want to delete this customer?")) return;
 
         customerData.splice(index, 1);
-        alert("Customer deleted successfully!");
+        Swal.fire({
+            title: "Delete Successfully!",
+            icon: "success",
+            draggable: true
+        });
 
         this.loadCustomerTable();
         this.clearForm();
     }
 }
-
+function generateCusyomerId(num) {
+    return `C${num.toString().padStart(3, '0')}`;
+}
 
 new CustomerController();

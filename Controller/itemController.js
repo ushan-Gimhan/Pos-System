@@ -1,15 +1,16 @@
 import {itemData} from "../DB/db.js";
 import { Item } from "../Model/item.js";
+import { setItemIds } from "../Controller/ordersController.js";
 
         $('#saveItemBtn').on('click', function(){
             let id;
-            // if (itemData.length > 0) {
-            //     const lastId = itemData[itemData.length - 1].id;
-            //     const numericId = parseInt(lastId.slice(1)) + 1;
-            //     id = 'I' + numericId.toString().padStart(3, '0');
-            // } else {
-            //     id = 'I001';
-            // }
+            if (itemData.length > 0) {
+                const lastId = itemData[itemData.length - 1].item_id;
+                const numericId = parseInt(lastId.slice(1)) + 1;
+                id = 'I' + numericId.toString().padStart(3, '0');
+            } else {
+                id = 'I001';
+            }
             id = $('#item_id').val();
             const name = $('#item_name').val();
             const qty = $('#item_qty').val();
@@ -21,12 +22,17 @@ import { Item } from "../Model/item.js";
             }
 
             console.log(id);
-            const item = new Item(id, name, qty, unitPrice);
+            const item = new Item(id, name, unitPrice,qty);
             console.log(item);
 
             itemData.push(item);
             loadItems();
-            alert("Item saved!!");
+            setItemIds();
+            Swal.fire({
+                title: "Added Successfully!",
+                icon: "success",
+                draggable: true
+            });
             clearForm();
 
 
@@ -44,7 +50,11 @@ import { Item } from "../Model/item.js";
             itemData[index].itemID = itemID;
             itemData[index].item_name = name;
 
-            alert("Item updated successfully!");
+            Swal.fire({
+                title: "Update Successfully!",
+                icon: "success",
+                draggable: true
+            });
             loadItems();
             clearForm();
 
@@ -57,7 +67,7 @@ import { Item } from "../Model/item.js";
 
 
 
-         function loadItems() {
+         export function loadItems() {
              $('#ItemTableBody').empty();
              itemData.map((item, index) => {
                  let itemID = item.item_id;
@@ -97,7 +107,11 @@ import { Item } from "../Model/item.js";
              if (!confirm("Are you sure you want to delete this Item?")) return;
 
              itemData.splice(index, 1);
-             alert("Item deleted successfully!");
+             Swal.fire({
+                 title: "Delete Successfully!",
+                 icon: "success",
+                 draggable: true
+             });
 
              loadItems();
              clearForm();
@@ -120,7 +134,6 @@ import { Item } from "../Model/item.js";
              $('#item_name').val(name);
              $('#item_qty').val(qty);
              $('#item_price').val(price);
-
 
          });
 
