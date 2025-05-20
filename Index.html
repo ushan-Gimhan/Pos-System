@@ -153,6 +153,9 @@
         .logOut{
             margin: 0 !important;
         }
+        .highlight td{
+            background-color: #ffeb99 !important;
+        }
 
         @media (max-width: 768px) {
             .d-flex.mx-auto {
@@ -198,13 +201,14 @@
 </nav>
 <section id="home" class="container mt-5">
     <h4 class="mb-4">Order Details</h4>
-    <div class="mb-3">
-        <input type="text" id="orderSearchInput" class="form-control" placeholder="Search by Order ID or Customer Name">
+    <div class="row mb-3">
+        <div class="col-md-10">
+            <input type="text" id="orderSearchInput" class="form-control" placeholder="Search by Order ID or Customer Name">
+        </div>
+        <div class="col-md-2">
+            <button id="orderSearchBtn" class="btn btn-primary w-100">Search</button>
+        </div>
     </div>
-    <div class="col-md-3">
-        <button id="orderSearchBtn" class="btn btn-primary w-100">Search</button>
-    </div>
-
     <table class="table table-bordered table-hover" id="orderDetailsTable">
         <thead class="table-dark">
         <tr>
@@ -578,10 +582,10 @@
         crossorigin="anonymous"></script>
 <script src="Assests/lib/jQuery/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="module" src="Controller/home.js"> </script>
 <script type="module" src="Controller/customerController.js"></script>
 <script type="module" src="Controller/itemController.js"></script>
 <script type="module" src="Controller/ordersController.js"></script>
-<script type="module" src="Controller/homeController.js"></script>
 <script type="module" src="DB/db.js"></script>
 <script>
     $(document).ready(function () {

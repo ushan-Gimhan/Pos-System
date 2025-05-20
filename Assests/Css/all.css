@@ -93,3 +93,6 @@ tbody tr:hover {
     background-color: #3498db;
     cursor: pointer;
 }
+.highlight {
+    background-color: #ffeb99 !important;
+}

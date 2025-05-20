@@ -159,6 +159,8 @@ $('#placeOrderBtn').on('click', function () {
     $('#totalAmount').text("Rs. " + grandTotal.toFixed(2));
 
     $('#cartItems').empty();
+    generateOrderId();
+    clearCustomer();
     CartData.length = 0;
     $('#orderId').val(orderId);
     $('#orderDate').val(date);
