@@ -20,7 +20,7 @@ body {
     font-weight: bold;
 }
 .order-table {
-    background-color: #6c7ae0;
+    background-color: #6c7ae0 !important;
     color: white;
 }
 .order-table th {

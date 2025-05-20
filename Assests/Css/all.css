@@ -85,11 +85,11 @@ body {
 }
 
 .table-header {
-    background-color: #5468E7;
+    background-color: #5468E7 !important;
     color: white;
 }
 
 tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #3498db;
     cursor: pointer;
 }

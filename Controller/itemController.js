@@ -179,32 +179,39 @@ import { setItemIds } from "../Controller/ordersController.js";
 
          });
 
-         $('#searchItemBtn').on('click', function(){
-             let item_id = $('#searchItem').val().trim();
+$('#searchItemBtn').on('click', function () {
+    let item_id = $('#searchItem').val().trim();
 
-             const index = itemData.findIndex( item=> item.item_id ===item_id);
+    // Remove previous highlights
+    $('#ItemTableBody tr').removeClass('highlight');
 
-             $('#ItemTableBody').empty();
+    const index = itemData.findIndex(item => item.item_id === item_id);
 
-             if (index !== -1) {
-                 alert("Item found!");
-                 $('#searchItem').val("");
+    if (index !== -1) {
+        alert("Item found!");
+        $('#searchItem').val("");
 
-                 let foundItem = itemData[index];
-                 foundItem = `<tr>
-                    <td>${item_id}</td>
-                    <td>${foundItem.item_name}</td>
-                    <td>${foundItem.item_qty}</td>
-                    <td>${foundItem.item_price}</td>
-                </tr>`;
-                 $('#ItemTableBody').append(foundItem);
-             } else {
-                 alert("Item not found!");
-             }
-             loadItems();
+        // Scroll to and highlight the matching row
+        const $targetRow = $(`#item-${item_id}`);
+        if ($targetRow.length) {
+            $targetRow[0].scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
 
-         });
-         function genarateItemId(){
+            $targetRow.addClass('highlight');
+
+            // Remove highlight after a short delay
+            setTimeout(() => {
+                $targetRow.removeClass('highlight');
+            }, 2000);
+        }
+    } else {
+        alert("Item not found!");
+    }
+});
+
+function genarateItemId(){
              let id;
              if (itemData.length > 0) {
                  const lastId = itemData[itemData.length - 1].item_id;
@@ -214,4 +221,4 @@ import { setItemIds } from "../Controller/ordersController.js";
                  id = 'I001';
              }
              document.getElementById('item_id').value = id;
-         }
+}
