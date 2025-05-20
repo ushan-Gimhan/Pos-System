@@ -2,40 +2,53 @@ import {itemData} from "../DB/db.js";
 import { Item } from "../Model/item.js";
 import { setItemIds } from "../Controller/ordersController.js";
 
+        genarateItemId();
+        loadItems();
         $('#saveItemBtn').on('click', function(){
-            let id;
-            if (itemData.length > 0) {
-                const lastId = itemData[itemData.length - 1].item_id;
-                const numericId = parseInt(lastId.slice(1)) + 1;
-                id = 'I' + numericId.toString().padStart(3, '0');
-            } else {
-                id = 'I001';
-            }
-            id = $('#item_id').val();
-            const name = $('#item_name').val();
-            const qty = $('#item_qty').val();
-            const unitPrice = $('#item_price').val();
+            const id = $('#item_id').val().trim();
+            const name = $('#item_name').val().trim();
+            const qty = $('#item_qty').val().trim();
+            const unitPrice = $('#item_price').val().trim();
+
+            const namePattern = /^[A-Za-z0-9\s\-()]+$/;  // Allows letters, numbers, spaces, hyphens, and parentheses
+            const qtyPattern = /^\d+$/;                  // Only positive integers
+            const pricePattern = /^\d+(\.\d{1,2})?$/;     // Valid decimal number with up to 2 decimal places
 
             if (!name || !qty || !unitPrice) {
                 alert("Please fill out all fields.");
                 return;
             }
 
+            if (!namePattern.test(name)) {
+                alert("Invalid item name. Only letters, numbers, spaces, hyphens, and () are allowed.");
+                return;
+            }
+
+            if (!qtyPattern.test(qty)) {
+                alert("Invalid quantity. Enter a whole number.");
+                return;
+            }
+
+            if (!pricePattern.test(unitPrice)) {
+                alert("Invalid unit price. Use a valid number (e.g., 10 or 10.99).");
+                return;
+            }
+
             console.log(id);
-            const item = new Item(id, name, unitPrice,qty);
+            const item = new Item(id, name, parseFloat(unitPrice), parseInt(qty));
             console.log(item);
 
             itemData.push(item);
             loadItems();
             setItemIds();
+
             Swal.fire({
                 title: "Added Successfully!",
                 icon: "success",
                 draggable: true
             });
+
             clearForm();
-
-
         });
 
         $('#updateItemBtn').on('click', function(){
@@ -44,28 +57,56 @@ import { setItemIds } from "../Controller/ordersController.js";
             const qty = $('#item_qty').val().trim();
             const unitPrice = $('#item_price').val().trim();
 
+            const namePattern = /^[A-Za-z0-9\s\-()]+$/;    // Letters, numbers, spaces, hyphens, parentheses
+            const qtyPattern = /^\d+$/;                    // Only positive integers
+            const pricePattern = /^\d+(\.\d{1,2})?$/;      // Decimal numbers with up to 2 decimal places
+
+            if (!name || !qty || !unitPrice) {
+                alert("Please fill out all fields.");
+                return;
+            }
+
+            if (!namePattern.test(name)) {
+                alert("Invalid item name. Only letters, numbers, spaces, hyphens, and () are allowed.");
+                return;
+            }
+
+            if (!qtyPattern.test(qty)) {
+                alert("Invalid quantity. Enter a whole number.");
+                return;
+            }
+
+            if (!pricePattern.test(unitPrice)) {
+                alert("Invalid unit price. Use a valid number like 10 or 10.99.");
+                return;
+            }
+
             const index = itemData.findIndex(item => item.item_id === itemID);
-            itemData[index].item_qty = qty;
-            itemData[index].item_price = unitPrice;
-            itemData[index].itemID = itemID;
+
+            if (index === -1) {
+                alert("Item not found!");
+                return;
+            }
+
+            itemData[index].item_qty = parseInt(qty);
+            itemData[index].item_price = parseFloat(unitPrice);
+            itemData[index].item_id = itemID;  // Fixed from 'itemID' to 'item_id'
             itemData[index].item_name = name;
 
             Swal.fire({
-                title: "Update Successfully!",
+                title: "Updated Successfully!",
                 icon: "success",
                 draggable: true
             });
+
             loadItems();
             clearForm();
-
         });
 
         $('#resetItemBtn').on('click', function(){
             clearForm();
             $('#saveItemBtn').prop('disabled', false);
         });
-
-
 
          export function loadItems() {
              $('#ItemTableBody').empty();
@@ -92,6 +133,7 @@ import { setItemIds } from "../Controller/ordersController.js";
              $('#item_name').val("");
              $('#item_qty').val("");
              $('#item_price').val("");
+             genarateItemId();
          }
 
 
@@ -162,3 +204,14 @@ import { setItemIds } from "../Controller/ordersController.js";
              loadItems();
 
          });
+         function genarateItemId(){
+             let id;
+             if (itemData.length > 0) {
+                 const lastId = itemData[itemData.length - 1].item_id;
+                 const numericId = parseInt(lastId.slice(1)) + 1;
+                 id = 'I' + numericId.toString().padStart(3, '0');
+             } else {
+                 id = 'I001';
+             }
+             document.getElementById('item_id').value = id;
+         }

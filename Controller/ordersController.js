@@ -1,6 +1,7 @@
 import { OrderModel } from '../Model/orders.js';
 import { OrderDeatails } from '../Model/orderDeatails.js';
-import {customerData, itemData , orderDeatails} from "../DB/db.js";
+import { Cart } from '../Model/cart.js';
+import {customerData, itemData, orderData, orderDeatails,CartData} from "../DB/db.js";
 
 const model = new OrderModel();
 
@@ -11,19 +12,21 @@ window.addEventListener('DOMContentLoaded', () => {
     const today = new Date();
     const formattedDate = `${today.getDate().toString().padStart(2, '0')}/${
         (today.getMonth() + 1).toString().padStart(2, '0')}/${today.getFullYear()}`;
-    document.getElementById('orderDate').value = formattedDate;
+    document.getElementById('orderInDate').value = formattedDate;
 
-    const orderId = generateOrderId(1); // Replace 1 with the next available number
-    document.getElementById('orderID').value = orderId;
+    const orderId = generateOrderId(); // Replace 1 with the next available number
+    document.getElementById('orderInID').value = orderId;
 
 
     document.getElementById('qtyInOrder').addEventListener('input', () => {
-        const qty = parseInt(document.getElementById('qtyInOrder').value);
-        const price = parseFloat(document.getElementById('unitPrice').value);
-        if (!isNaN(qty) && !isNaN(price)) {
-            document.getElementById('total').value = qty * price;
+        const qtyInOrder = parseInt(document.getElementById('qtyInOrder').value);
+        const unitPrice = parseFloat(document.getElementById('unitPrice').value);
+        const totalField = document.getElementById('totalInvoice');
+
+        if (!isNaN(qtyInOrder) && !isNaN(unitPrice) && qtyInOrder >= 0 && unitPrice >= 0) {
+            totalField.value = (qtyInOrder * unitPrice).toFixed(2);
         } else {
-            document.getElementById('total').value = '';
+            totalField.value = '';
         }
     });
 
@@ -33,8 +36,16 @@ window.addEventListener('DOMContentLoaded', () => {
         itemSelect.selectedIndex = 0;
     });
 
-    function generateOrderId(num) {
-        return `O${num.toString().padStart(3, '0')}`;
+    function generateOrderId() {
+        let id;
+        if (orderData.length > 0) {
+            const lastId = orderData[orderData.length - 1].O_id;
+            const numericId = parseInt(lastId.slice(1)) + 1;
+            id = 'O' + numericId.toString().padStart(3, '0');
+        } else {
+            id = 'O001';
+        }
+        return id;
     }
 
     document.getElementById('addToCartBtn').addEventListener('click', function () {
@@ -57,10 +68,12 @@ window.addEventListener('DOMContentLoaded', () => {
         const total = qtyInOrder * unitPrice;
         const availableQty = qtyOnHand - qtyInOrder;
 
+        const cart = new Cart(itemId,itemName,qtyOnHand,unitPrice,qtyInOrder);
+
+        CartData.push(cart);
+
         const indexI = itemData.findIndex(item => item.item_id === itemId);
         itemData[indexI].item_qty = availableQty;
-        itemData[indexI].item_price = unitPrice;
-        itemData[indexI].item_name = itemName;
 
         const cartTableBody = document.getElementById('cartItems');
         const row = document.createElement('tr');
@@ -143,4 +156,74 @@ export function setCustomerIds(){
     function getIetmByUd(id) {
         return itemData.find(item => item.item_id === id);
     }
+
+    $('#placeOrderBtn').on('click', function () {
+        const orderId = $('#orderInID').val();
+        const date = $('#orderInDate').val();
+        const itemName = $('#itemNameInOrder').val();
+        const qtyInOrder = parseInt($('#qtyInOrder').val());
+
+        let grandTotal=getTotalBalance();
+        document.getElementById('total').value = grandTotal;
+
+        $('#totalAmount').text("Rs. " + grandTotal.toFixed(2));
+        const row = `
+            <tr>
+                <td>${orderId}</td>
+                <td>${date}</td>
+                <td>${itemId}</td>
+                <td>${itemName}</td>
+                <td>${qtyInOrder}</td>
+                <td>${unitPrice.toFixed(2)}</td>
+                <td>${total.toFixed(2)}</td>
+            </tr>
+        `;
+        $('#orderTableBody').append(row);
+
+        // Optionally update qty on hand
+        $('#qtyOnHand').val(qtyOnHand - qtyInOrder);
+
+        // Clear fields for next order
+        $('#inputItemId').val('');
+        $('#itemNameInOrder').val('');
+        $('#qtyInOrder').val('');
+        $('#unitPrice').val('');
+    });
+
+    function getTotalBalance(){
+        let grandTotal = 0;
+        for (let item of CartData) {
+            grandTotal += item.totalInvoice;
+        }
+        return grandTotal;
+    }
+
+$("#cartItems").on('click', 'tr', function() {
+    let CId = $(this).index();
+    let obj = CartData[CId];
+
+    let selectedItemId = obj.itemId;
+    $('#remove').on('click', function () {
+        const cartIndex = CartData.findIndex(item => item.itemId === selectedItemId);
+
+        if (cartIndex !== -1) {
+            const removedItem = CartData[cartIndex];
+            const removedQty = removedItem.qtyInOrder;
+
+            const itemIndex = itemData.findIndex(item => item.item_id === selectedItemId);
+
+            if (itemIndex !== -1) {
+                itemData[itemIndex].item_qty += removedQty;
+            }
+
+            CartData.splice(cartIndex, 1);
+
+            $(`#orderTableBody tr`).filter(function () {
+                return $(this).find('td:eq(2)').text() === selectedItemId;
+            }).remove();
+
+            $('#item_qty').val(itemData[itemIndex].item_qty);
+        }
+    });
+});
 

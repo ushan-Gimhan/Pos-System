@@ -1,5 +1,5 @@
 import { Customer } from "../Model/Customer.js";
-import { customerData } from "../DB/db.js";
+import {customerData, orderData} from "../DB/db.js";
 import {setCustomerIds} from "../Controller/ordersController.js";
 
 
@@ -7,8 +7,7 @@ export class CustomerController {
     constructor() {
         $(document).ready(() => {
             this.handleEvents();
-            const custID = generateCusyomerId(1); // Replace 1 with the next available number
-            document.getElementById('id').value = custID;
+            this.generateCusyomerId();
         });
     }
 
@@ -17,25 +16,37 @@ export class CustomerController {
         $('#updateCustomerBtn').click(() => this.handleUpdateCustomer());
         $('#resetCustomerBtn').click(() => this.clearForm());
         $('#deleteCustomerBtn').click(() => this.handleDeleteCustomer());
+        $('#customerTableBody').click(() => this.handleCustomerRowClick());
     }
 
     handleSaveCustomer() {
-        let id;
+        const  id = $('#id').val().trim();
+        const name = $('#name').val().trim();
+        const nic = $('#nic').val().trim();
+        const email = $('#email').val().trim();
+        const mobile = $('#mobile').val().trim();
 
-        if (customerData.length > 0) {
-            const lastId = customerData[customerData.length - 1].id;
-            const numericId = parseInt(lastId.slice(1)) + 1;
-            id = 'C' + numericId.toString().padStart(3, '0');
-        } else {
-            id = 'C001';
-        }
-        const name = $('#name').val();
-        const nic = $('#nic').val();
-        const email = $('#email').val();
-        const mobile = $('#mobile').val();
+        const nicPattern = /^(\d{9}[vVxX]|\d{12})$/; // old/new NIC formats
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const mobilePattern = /^07\d{8}$/; // e.g., 0771234567
 
         if (!name || !nic || !email || !mobile) {
             alert("Please fill out all fields.");
+            return;
+        }
+
+        if (!nicPattern.test(nic)) {
+            alert("Invalid NIC. Use 9 digits + V/X or 12 digits.");
+            return;
+        }
+
+        if (!emailPattern.test(email)) {
+            alert("Invalid email format.");
+            return;
+        }
+
+        if (!mobilePattern.test(mobile)) {
+            alert("Invalid mobile number. Should start with 07 and contain 10 digits.");
             return;
         }
 
@@ -43,19 +54,19 @@ export class CustomerController {
 
         customerData.push(customer);
         setCustomerIds();
+        this.clearForm();
+        this.loadCustomerTable();
         Swal.fire({
             title: "Added Successfully!",
             icon: "success",
             draggable: true
         });
-        this.clearForm();
-        this.loadCustomerTable();
-        this.handleCustomerRowClick();
     }
 
     clearForm() {
         $('#customerForm')[0].reset();
         $('#saveCustomerBtn').prop('disabled', false);
+        this.generateCusyomerId();
     }
     loadCustomerTable() {
         const tbody = $('#customerTableBody');
@@ -78,6 +89,7 @@ export class CustomerController {
         `;
             tbody.append(row);
         });
+
     }
     handleCustomerRowClick() {
         $('#saveCustomerBtn').prop('disabled', true);
@@ -96,18 +108,42 @@ export class CustomerController {
     }
 
     handleUpdateCustomer() {
-        const id = $('#id').val();
-        const customerName = $('#name').val();
-        const customerNic = $('#nic').val();
-        const customerEmail = $('#email').val();
-        const customerPhone = $('#mobile').val();
+        const id = $('#id').val().trim();
+        const customerName = $('#name').val().trim();
+        const customerNic = $('#nic').val().trim();
+        const customerEmail = $('#email').val().trim();
+        const customerPhone = $('#mobile').val().trim();
+
+        const nicPattern = /^(\d{9}[vVxX]|\d{12})$/; // Old or new NIC format
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const mobilePattern = /^07\d{8}$/; // Sri Lankan format: starts with 07 and has 10 digits
+
+        if (!id || !customerName || !customerNic || !customerEmail || !customerPhone) {
+            alert("Please fill out all fields.");
+            return;
+        }
+
+        if (!nicPattern.test(customerNic)) {
+            alert("Invalid NIC. Use 9 digits + V/X or 12 digits.");
+            return;
+        }
+
+        if (!emailPattern.test(customerEmail)) {
+            alert("Invalid email format.");
+            return;
+        }
+
+        if (!mobilePattern.test(customerPhone)) {
+            alert("Invalid mobile number. Should start with 07 and contain 10 digits.");
+            return;
+        }
 
         const index = customerData.findIndex(customer => customer.id === id);
 
         if (index === -1) {
             Swal.fire({
-                title: "Update Successfully!",
-                icon: "success",
+                title: "Customer Not Found!",
+                icon: "error",
                 draggable: true
             });
             return;
@@ -123,9 +159,11 @@ export class CustomerController {
             icon: "success",
             draggable: true
         });
+
         this.loadCustomerTable();
         this.clearForm();
     }
+
     handleDeleteCustomer() {
         const id = $('#id').val();
 
@@ -148,9 +186,17 @@ export class CustomerController {
         this.loadCustomerTable();
         this.clearForm();
     }
-}
-function generateCusyomerId(num) {
-    return `C${num.toString().padStart(3, '0')}`;
+    generateCusyomerId() {
+        let id;
+        if (customerData.length > 0) {
+            const lastId = customerData[customerData.length - 1].id;
+            const numericId = parseInt(lastId.slice(1)) + 1;
+            id = 'C' + numericId.toString().padStart(3, '0');
+        } else {
+            id = 'C001';
+        }
+        document.getElementById('id').value = id;
+    }
 }
 
 new CustomerController();

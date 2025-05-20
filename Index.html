@@ -202,7 +202,7 @@
                 <div class="form-group row align-items-center">
                     <label for="id" class="col-sm-2 col-form-label fw-bold">ID</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="id">
+                        <input type="text" class="form-control" id="id" readonly>
                     </div>
                 </div>
 
@@ -250,7 +250,7 @@
                     <input type="text" class="form-control" id="search" name="search" placeholder="Search by name, email, or NIC...">
                 </div>
                 <div class="col-sm-2">
-                    <button type="button" class="btn btn-search text-white w-100" id="searchBtn">Search</button>
+                    <button type="button" class="btn btn-search text-black w-200" id="searchBtn">Search</button>
                 </div>
             </div>
 
@@ -294,7 +294,7 @@
                 <div class="form-group row align-items-center">
                     <label for="item_id" class="col-sm-2 col-form-label fw-bold">Item ID</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="item_id" name="Item ID">
+                        <input type="text" class="form-control" id="item_id" name="Item ID" readonly>
                     </div>
                 </div>
 
@@ -336,7 +336,7 @@
                     <input type="text" class="form-control" id="searchItem" name="search" placeholder="Search by name, email, or NIC...">
                 </div>
                 <div class="col-sm-2">
-                    <button type="button" class="btn btn-search text-white w-100" id="searchItemBtn">Search</button>
+                    <button type="button" class="btn btn-search text-black w-100" id="searchItemBtn">Search</button>
                 </div>
             </div>
 
@@ -373,11 +373,11 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="orderID" class="form-label">Order ID</label>
-                        <input type="text" class="form-control" id="orderID" readonly>
+                        <input type="text" class="form-control" id="orderInID" readonly>
                     </div>
                     <div class="col-md-6">
                         <label for="orderDate" class="form-label">Date</label>
-                        <input type="text" class="form-control bg-light" id="orderDate"  readonly>
+                        <input type="text" class="form-control bg-light" id="orderInDate"  readonly>
                     </div>
                 </div>
 
@@ -418,7 +418,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="total" class="form-label">Total</label>
-                                    <input type="number" class="form-control" id="total" readonly>
+                                    <input type="number" class="form-control" id="totalInvoice" readonly>
                                 </div>
                             </div>
                         </div>
@@ -474,10 +474,67 @@
                 </div>
 
                 <div class="row mt-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <button class="btn btn-place-order mb-2" id="placeOrderBtn">Place Order</button>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <button class="btn btn-place-order mb-2" id="invoice" data-bs-toggle="modal" data-bs-target="#scrollableModal">Get Invoice</button>
+                        <div class="modal fade" id="scrollableModal" tabindex="-1" aria-labelledby="scrollableModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-primary text-white">
+                                        <h5 class="modal-title" id="scrollableModalLabel">Invoice Details</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="invoiceForm">
+                                            <div class="row g-3">
+                                                <div class="col-md-6">
+                                                    <label for="orderId" class="form-label">Order ID</label>
+                                                    <input type="text" class="form-control" id="orderId" readonly>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="orderDate" class="form-label">Order Date</label>
+                                                    <input type="date" class="form-control" id="orderDate" readonly>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="itemId" class="form-label">Item ID</label>
+                                                    <input type="text" class="form-control" id="itemId" readonly>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="custId" class="form-label">Customer ID</label>
+                                                    <input type="text" class="form-control" id="custId" readonly>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="custName" class="form-label">Customer Name</label>
+                                                    <input type="text" class="form-control" id="custName" readonly>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="total" class="form-label">Total</label>
+                                                    <input type="text" class="form-control" id="total" readonly>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="paymentMethod" class="form-label">Payment Method</label>
+                                                    <select class="form-select" id="paymentMethod">
+                                                        <option value="" selected disabled>Choose method</option>
+                                                        <option value="Cash">Cash</option>
+                                                        <option value="Card">Card</option>
+                                                        <option value="Bank Transfer">Online</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-success" id="confirmOrderBtn">Print Invoice</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <button class="btn btn-reset mb-2 Orderreset"  id="resetOrderBtn">Reset</button>
                     </div>
                 </div>
